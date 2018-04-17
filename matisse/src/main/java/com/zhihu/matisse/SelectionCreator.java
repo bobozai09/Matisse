@@ -202,6 +202,21 @@ public final class SelectionCreator {
     }
 
     /**
+     * 直接调起相机拍照
+     * @param isGetPicCaptureOnly 必须与capture(true)方法同时使用
+     * @auther hutuge
+     * @return
+     */
+    public SelectionCreator getPicCaptureOnly(boolean isGetPicCaptureOnly) {
+        mSelectionSpec.getPicCaptureOnly = isGetPicCaptureOnly;
+        return this;
+    }
+    public  SelectionCreator isPreview(boolean isPreview){
+        mSelectionSpec.isPreview=isPreview;
+        return this;
+    }
+
+    /**
      * Capture strategy provided for the location to save photos including internal and external
      * storage and also a authority for {@link android.support.v4.content.FileProvider}.
      *

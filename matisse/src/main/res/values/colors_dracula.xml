@@ -40,4 +40,6 @@
     <color name="dracula_preview_bottom_toolbar_back_text">#FFFFFF</color>
     <color name="dracula_preview_bottom_toolbar_apply_text">#03A9F4</color>
     <color name="dracula_preview_bottom_toolbar_apply_text_disable">#4D03A9F4</color>
+    <color name="text_clolr">#18CE00</color>
+    <color name="text_gray">#333333</color>
 </resources>

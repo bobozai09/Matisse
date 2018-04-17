@@ -1,0 +1,1 @@
+package com.zhihu.matisse;import android.app.Activity;import android.os.Bundle;import android.support.annotation.Nullable;import java.security.MessageDigest;import java.security.NoSuchAlgorithmException;/** * Created by boboz on 2018/4/17. * ABCDE FGHIJK LMNOPQR STUVWXYZ */public class TestActivity extends Activity {}

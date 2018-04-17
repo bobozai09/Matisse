@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -34,10 +35,11 @@ import com.zhihu.matisse.internal.utils.PhotoMetadataUtils;
 import it.sephiroth.android.library.imagezoom.ImageViewTouch;
 import it.sephiroth.android.library.imagezoom.ImageViewTouchBase;
 
-public class PreviewItemFragment extends Fragment {
+public class PreviewItemFragment extends Fragment{
 
     private static final String ARGS_ITEM = "args_item";
-
+    private onImageTouchListener onImageClickListener;
+BasePreviewActivity basePreviewActivity;
     public static PreviewItemFragment newInstance(Item item) {
         PreviewItemFragment fragment = new PreviewItemFragment();
         Bundle bundle = new Bundle();
@@ -45,15 +47,24 @@ public class PreviewItemFragment extends Fragment {
         fragment.setArguments(bundle);
         return fragment;
     }
+    public static PreviewItemFragment newInstance(String imageurl){
+        PreviewItemFragment fragment = new PreviewItemFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(ARGS_ITEM, imageurl);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_preview_item, container, false);
+        View view=LayoutInflater.from(container.getContext()).inflate(R.layout.fragment_preview_item,container,false);
+        return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        onImageClickListener=null;
         final Item item = getArguments().getParcelable(ARGS_ITEM);
         if (item == null) {
             return;
@@ -78,7 +89,7 @@ public class PreviewItemFragment extends Fragment {
             videoPlayButton.setVisibility(View.GONE);
         }
 
-        ImageViewTouch image = (ImageViewTouch) view.findViewById(R.id.image_view);
+        final ImageViewTouch image = (ImageViewTouch) view.findViewById(R.id.image_view);
         image.setDisplayType(ImageViewTouchBase.DisplayType.FIT_TO_SCREEN);
 
         Point size = PhotoMetadataUtils.getBitmapSize(item.getContentUri(), getActivity());
@@ -88,6 +99,17 @@ public class PreviewItemFragment extends Fragment {
         } else {
             SelectionSpec.getInstance().imageEngine.loadImage(getContext(), size.x, size.y, image,
                     item.getContentUri());
+            image.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+
+//                    if (onImageClickListener!=null){
+//                        onImageClickListener.onImageclickListener();
+//
+//                    }
+                    return false;
+                }
+            });
         }
     }
 
@@ -96,4 +118,13 @@ public class PreviewItemFragment extends Fragment {
             ((ImageViewTouch) getView().findViewById(R.id.image_view)).resetMatrix();
         }
     }
+    protected void  setOnImageClickListener(onImageTouchListener onImageClickListener){
+        this.onImageClickListener=onImageClickListener;
+    }
+
+
+    private interface onImageTouchListener{
+        void onImageclickListener();
+}
+
 }

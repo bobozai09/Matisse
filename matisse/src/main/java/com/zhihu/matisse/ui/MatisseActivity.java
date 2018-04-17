@@ -1,18 +1,3 @@
-/*
- * Copyright 2017 Zhihu Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.zhihu.matisse.ui;
 
 import android.app.Activity;
@@ -31,10 +16,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zhihu.matisse.R;
 import com.zhihu.matisse.internal.entity.Album;
@@ -45,6 +32,7 @@ import com.zhihu.matisse.internal.model.SelectedItemCollection;
 import com.zhihu.matisse.internal.ui.AlbumPreviewActivity;
 import com.zhihu.matisse.internal.ui.BasePreviewActivity;
 import com.zhihu.matisse.internal.ui.MediaSelectionFragment;
+import com.zhihu.matisse.internal.ui.PreviewPhotoActivity;
 import com.zhihu.matisse.internal.ui.SelectedPreviewActivity;
 import com.zhihu.matisse.internal.ui.adapter.AlbumMediaAdapter;
 import com.zhihu.matisse.internal.ui.adapter.AlbumsAdapter;
@@ -68,6 +56,7 @@ public class MatisseActivity extends AppCompatActivity implements
     public static final String EXTRA_RESULT_SELECTION_PATH = "extra_result_selection_path";
     private static final int REQUEST_CODE_PREVIEW = 23;
     private static final int REQUEST_CODE_CAPTURE = 24;
+    private static final int REQUESE_CODE_TAKEPHOTO_PREVIEW = 25;
     private final AlbumCollection mAlbumCollection = new AlbumCollection();
     private MediaStoreCompat mMediaStoreCompat;
     private SelectedItemCollection mSelectedCollection = new SelectedItemCollection(this);
@@ -86,7 +75,7 @@ public class MatisseActivity extends AppCompatActivity implements
         mSpec = SelectionSpec.getInstance();
         setTheme(mSpec.themeId);
         super.onCreate(savedInstanceState);
-
+   // this.overridePendingTransition(R.anim.activity_open,0);
         setContentView(R.layout.activity_matisse);
 
         if (mSpec.needOrientationRestriction()) {
@@ -98,6 +87,9 @@ public class MatisseActivity extends AppCompatActivity implements
             if (mSpec.captureStrategy == null)
                 throw new RuntimeException("Don't forget to set CaptureStrategy.");
             mMediaStoreCompat.setCaptureStrategy(mSpec.captureStrategy);
+            if (mSpec.getPicCaptureOnly) {
+                capture();
+            }
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -143,12 +135,15 @@ public class MatisseActivity extends AppCompatActivity implements
     protected void onDestroy() {
         super.onDestroy();
         mAlbumCollection.onDestroy();
+     //this.overridePendingTransition(R.anim.acivity_close,0);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
+     onBackPressed();
+
+          //  this.overridePendingTransition(R.anim.acivity_close,0);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -158,6 +153,7 @@ public class MatisseActivity extends AppCompatActivity implements
     public void onBackPressed() {
         setResult(Activity.RESULT_CANCELED);
         super.onBackPressed();
+        overridePendingTransition(0, R.anim.page_anima_down_out);
     }
 
     @Override
@@ -165,7 +161,6 @@ public class MatisseActivity extends AppCompatActivity implements
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_OK)
             return;
-
         if (requestCode == REQUEST_CODE_PREVIEW) {
             Bundle resultBundle = data.getBundleExtra(BasePreviewActivity.EXTRA_RESULT_BUNDLE);
             ArrayList<Item> selected = resultBundle.getParcelableArrayList(SelectedItemCollection.STATE_SELECTION);
@@ -194,23 +189,46 @@ public class MatisseActivity extends AppCompatActivity implements
                 }
                 updateBottomToolbar();
             }
-        } else if (requestCode == REQUEST_CODE_CAPTURE) {
+        } else if (requestCode == REQUEST_CODE_CAPTURE) {//拍照返回参数
             // Just pass the data back to previous calling Activity.
-            Uri contentUri = mMediaStoreCompat.getCurrentPhotoUri();
-            String path = mMediaStoreCompat.getCurrentPhotoPath();
-            ArrayList<Uri> selected = new ArrayList<>();
-            selected.add(contentUri);
-            ArrayList<String> selectedPath = new ArrayList<>();
-            selectedPath.add(path);
-            Intent result = new Intent();
-            result.putParcelableArrayListExtra(EXTRA_RESULT_SELECTION, selected);
-            result.putStringArrayListExtra(EXTRA_RESULT_SELECTION_PATH, selectedPath);
-            setResult(RESULT_OK, result);
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
-                MatisseActivity.this.revokeUriPermission(contentUri,
-                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+//            Intent intent = new Intent(this, SelectedPreviewActivity.class);
+//            intent.putExtra(BasePreviewActivity.EXTRA_DEFAULT_BUNDLE, mMediaStoreCompat.getCurrentPhotoUri());
+//            Log.i("tag>>>>>>",mSelectedCollection.getDataWithBundle()+"&&&&&"+mSelectedCollection.asListOfUri());
+//            startActivityForResult(intent, REQUEST_CODE_PREVIEW);
+            if (mSpec.isPreview) {
+                //进入预览拍照界面
+                Intent intent = new Intent(this, PreviewPhotoActivity.class);
+                intent.putExtra(PreviewPhotoActivity.EXTRA_ALBUM, mMediaStoreCompat.getCurrentPhotoPath());
+                startActivityForResult(intent, REQUESE_CODE_TAKEPHOTO_PREVIEW);
+            } else {
+                returnImageUrl();
+            }
+
+        } else if (requestCode == REQUESE_CODE_TAKEPHOTO_PREVIEW) {
+//            if (data.getBooleanExtra("isprview", true)){
+            // Toast.makeText(this,"1234",Toast.LENGTH_SHORT).show();
+            String urlImagepth = mMediaStoreCompat.getCurrentPhotoPath();
+            Log.i("tag", "" + urlImagepth);
+            Intent intent = new Intent();
+            intent.putExtra("urlpath", urlImagepth);
+            intent.putExtra("url", mMediaStoreCompat.getCurrentPhotoPath());
+            setResult(RESULT_OK, intent);
             finish();
+
+            //returnImageUrl();
+//                Intent result = new Intent();
+////                result.putParcelableArrayListExtra(EXTRA_RESULT_SELECTION, selected);
+////                result.putStringArrayListExtra(EXTRA_RESULT_SELECTION_PATH, selectedPath);
+//                setResult(RESULT_OK, result);
+//                String m=data.getStringExtra("Imageurl");
+//                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+//                    MatisseActivity.this.revokeUriPermission(m,
+//                            Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//                finish();
         }
+        //   returnImageUrl();
+        //  }
     }
 
     private void updateBottomToolbar() {
@@ -230,11 +248,33 @@ public class MatisseActivity extends AppCompatActivity implements
         }
     }
 
+    private void returnImageUrl() {
+        Uri contentUri;
+//        if (mMediaStoreCompat.getCurrentPhotoUri().equals(null)){
+//            contentUri=
+//        }
+        contentUri = mMediaStoreCompat.getCurrentPhotoUri();
+        String path = mMediaStoreCompat.getCurrentPhotoPath();
+        ArrayList<Uri> selected = new ArrayList<>();
+        selected.add(contentUri);
+        ArrayList<String> selectedPath = new ArrayList<>();
+        selectedPath.add(path);
+        Intent result = new Intent();
+        result.putParcelableArrayListExtra(EXTRA_RESULT_SELECTION, selected);
+        result.putStringArrayListExtra(EXTRA_RESULT_SELECTION_PATH, selectedPath);
+        setResult(RESULT_OK, result);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+            MatisseActivity.this.revokeUriPermission(contentUri,
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        finish();
+    }
+
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.button_preview) {
             Intent intent = new Intent(this, SelectedPreviewActivity.class);
             intent.putExtra(BasePreviewActivity.EXTRA_DEFAULT_BUNDLE, mSelectedCollection.getDataWithBundle());
+            Log.i("tag>>>>>>", mSelectedCollection.getDataWithBundle() + "&&&&&" + mSelectedCollection.asListOfUri());
             startActivityForResult(intent, REQUEST_CODE_PREVIEW);
         } else if (v.getId() == R.id.button_apply) {
             Intent result = new Intent();
@@ -315,11 +355,19 @@ public class MatisseActivity extends AppCompatActivity implements
         }
     }
 
+    /**
+     * 图片选择点击事件
+     *
+     * @param album
+     * @param item
+     * @param adapterPosition
+     */
     @Override
     public void onMediaClick(Album album, Item item, int adapterPosition) {
         Intent intent = new Intent(this, AlbumPreviewActivity.class);
         intent.putExtra(AlbumPreviewActivity.EXTRA_ALBUM, album);
         intent.putExtra(AlbumPreviewActivity.EXTRA_ITEM, item);
+        intent.putExtra("whatclassto","matisse");
         intent.putExtra(BasePreviewActivity.EXTRA_DEFAULT_BUNDLE, mSelectedCollection.getDataWithBundle());
         startActivityForResult(intent, REQUEST_CODE_PREVIEW);
     }
@@ -332,7 +380,13 @@ public class MatisseActivity extends AppCompatActivity implements
     @Override
     public void capture() {
         if (mMediaStoreCompat != null) {
-            mMediaStoreCompat.dispatchCaptureIntent(this, REQUEST_CODE_CAPTURE);
+            if (mSelectedCollection.maxSelectableReached()){
+                Toast.makeText(getApplicationContext(),"最多选择"+mSpec.maxSelectable+"个文件",Toast.LENGTH_SHORT).show();
+            }else {
+                mMediaStoreCompat.dispatchCaptureIntent(this, REQUEST_CODE_CAPTURE);
+            }
+
         }
     }
+
 }

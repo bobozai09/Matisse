@@ -82,5 +82,52 @@
     <style name="Popup.Dracula" parent="Widget.AppCompat.ListPopupWindow">
         <item name="android:popupBackground">@color/dracula_album_popup_bg</item>
     </style>
+<!--<style name="CommAnimation" parent="@android:style/Animation.Activity">-->
+    <!--<item name="android:activityCloseExitAnimation">@anim/acivity_close</item>-->
 
+<!--</style>-->
+    <!--<style name="AppAnimationTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
+        <!--<item name="android:windowAnimationStyle">@style/CommAnimation</item>-->
+    <!--</style>-->
+    <style name="AppThemeDownInOut" parent="AppTheme.Base">
+        <item name="android:windowAnimationStyle">@style/DownInOutAnimActivity</item>
+    </style>
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="elevation">0dp</item>
+        <!-- Actionbar颜色： android:theme="@style/AppThemeFullScreen"
+        App bar 底色这个设定分为二种情况，1.若你的 android app 仍是使用 actionbar ，则直接在风格 (styles) 或是主题 (themes) 里进行设定
+        colorPrimary 参数即可；2.可若是采用 toolbar 的话，则要在界面 (layout) 里面设定 toolbar 控件的 background 属性。-->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <!--&lt;!&ndash;状态栏底色&ndash;&gt;-->
+        <item name="colorPrimaryDark">@color/colorPrimaryStatusBar</item>
+        <!--&lt;!&ndash;各控制元件(如：check box、switch 或是 radoi) 被勾选 (checked) 或是选定 (selected) 的颜色。&ndash;&gt;-->
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
+        <!--&lt;!&ndash;App 的背景色。&ndash;&gt;-->
+        <item name="android:windowBackground">@color/comm_page_bg_gray</item>
+        <!--&lt;!&ndash;App bar 上的标题与更多菜单中的文字颜色。&ndash;&gt;-->
+        <item name="android:textColorPrimary">@color/col_title</item>
+        <item name="subtitleTextColor">@color/col_subtitle</item>
+        <!--&lt;!&ndash;APP页面切换动画&ndash;&gt;-->
+        <item name="android:windowAnimationStyle">@style/CommAnimationActivity</item>
+        <item name="actionBarSize">@dimen/actionBarSize</item>
+        <item name="android:screenOrientation">portrait</item>
+
+    </style>
+    <style name="DownInOutAnimActivity" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/page_anima_down_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/page_anima_down_out</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+    <style name="CommAnimationActivity" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/page_anima_right_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/page_anima_left_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/page_anima_left_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/page_anima_right_out</item>
+    </style>
+    <style name="toolbar_theme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="colorControlNormal">@color/colff2626</item>
+<item name="android:homeAsUpIndicator">@drawable/close_black</item>
+
+    </style>
 </resources>

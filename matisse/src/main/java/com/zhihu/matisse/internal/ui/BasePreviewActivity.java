@@ -23,7 +23,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zhihu.matisse.R;
 import com.zhihu.matisse.internal.entity.IncapableCause;
@@ -32,6 +34,7 @@ import com.zhihu.matisse.internal.entity.SelectionSpec;
 import com.zhihu.matisse.internal.model.SelectedItemCollection;
 import com.zhihu.matisse.internal.ui.adapter.PreviewPagerAdapter;
 import com.zhihu.matisse.internal.ui.widget.CheckView;
+import com.zhihu.matisse.internal.ui.widget.PreviewViewPager;
 import com.zhihu.matisse.internal.utils.PhotoMetadataUtils;
 import com.zhihu.matisse.internal.utils.Platform;
 
@@ -52,9 +55,9 @@ public abstract class BasePreviewActivity extends AppCompatActivity implements V
     protected TextView mButtonBack;
     protected TextView mButtonApply;
     protected TextView mSize;
-
+protected FrameLayout bottom_toolbar;
     protected int mPreviousPos = -1;
-
+protected  boolean isshow=true;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setTheme(SelectionSpec.getInstance().themeId);
@@ -78,12 +81,13 @@ public abstract class BasePreviewActivity extends AppCompatActivity implements V
         mButtonBack = (TextView) findViewById(R.id.button_back);
         mButtonApply = (TextView) findViewById(R.id.button_apply);
         mSize = (TextView) findViewById(R.id.size);
+        bottom_toolbar=findViewById(R.id.bottom_toolbar);
         mButtonBack.setOnClickListener(this);
         mButtonApply.setOnClickListener(this);
 
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.addOnPageChangeListener(this);
-        mAdapter = new PreviewPagerAdapter(getSupportFragmentManager(), null);
+        mAdapter = new PreviewPagerAdapter(getSupportFragmentManager(),null);
         mPager.setAdapter(mAdapter);
         mCheckView = (CheckView) findViewById(R.id.check_view);
         mCheckView.setCountable(mSpec.countable);
@@ -152,9 +156,9 @@ public abstract class BasePreviewActivity extends AppCompatActivity implements V
     public void onPageSelected(int position) {
         PreviewPagerAdapter adapter = (PreviewPagerAdapter) mPager.getAdapter();
         if (mPreviousPos != -1 && mPreviousPos != position) {
+            Item item = adapter.getMediaItem(position);
             ((PreviewItemFragment) adapter.instantiateItem(mPager, mPreviousPos)).resetView();
 
-            Item item = adapter.getMediaItem(position);
             if (mSpec.countable) {
                 int checkedNum = mSelectedCollection.checkedNumOf(item);
                 mCheckView.setCheckedNum(checkedNum);
@@ -216,5 +220,8 @@ public abstract class BasePreviewActivity extends AppCompatActivity implements V
         IncapableCause cause = mSelectedCollection.isAcceptable(item);
         IncapableCause.handleCause(this, cause);
         return cause == null;
+    }
+    protected  interface  onItemClickListener{
+
     }
 }

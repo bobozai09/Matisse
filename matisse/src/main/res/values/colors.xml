@@ -19,4 +19,145 @@
     <color name="preview_bottom_toolbar_bg">#CC000000</color>
     <color name="preview_bottom_size">#61FFFFFF</color>
 
+    <!--************************通用颜色 START**********************-->
+
+    <!--通用未按下状态背景色-->
+    <color name="common_touch_bg">@color/white</color>
+    <!--通用触摸按下背景色-->
+    <color name="common_touch_press_bg">@color/colF4F4F4</color>
+    <color name="color_ripple">#AAE4E4E4</color>
+    <color name="common_ripple_press">@color/common_touch_press_bg</color>
+
+    <!--标题栏的背景颜色-->
+    <color name="colorPrimary">#fafafa</color>
+    <!--状态栏的背景颜色-->
+    <color name="colorPrimaryStatusBar">#fafafa</color>
+    <!--控件的选中颜色，即checked或selected状态的颜色。-->
+    <color name="colorAccent">#FF9DB0</color>
+
+    <color name="col_title">#2a2a2a</color>
+    <color name="col_subtitle">#666666</color>
+    <color name="titlebar_bottom_divider">#cccccc</color>
+    <color name="holo_blue">#FF33E5B5</color>
+    <!--通用背景色-->
+    <color name="comm_page_bg">@color/white</color>
+    <color name="comm_page_bg_gray">@color/colF4F4F4</color>
+
+    <!--通用灰色背景色-->
+    <color name="common_gray_bg">#EEEEEE</color>
+
+    <!--通用一级标题的颜色-->
+    <color name="common_h1">#333333</color>
+    <!--通用二级标题的颜色-->
+    <color name="common_h2">#666666</color>
+    <!--通用三级标题的颜色-->
+    <color name="common_h3">#B2B2B2</color>
+    <!--通用四级标题的颜色-->
+    <color name="common_h4">#999999</color>
+    <!--通用分割线细1-->
+    <color name="common_divider">#DCDCDC</color>
+    <!--通用分割线细2-->
+    <color name="common_divider_narrow">#E3E3E3</color>
+    <!--通用分割线粗3-->
+    <color name="common_divider_wide">@color/light_white</color>
+
+    <color name="comm_tip">#ff2626</color>
+    <color name="comm_hint">#b5b5b5</color>
+    <color name="comm_toolbar_menuitem_txt">#333333</color>
+    <color name="comm_img_clicked">#33000000</color>
+
+    <!--************************通用颜色 END**********************-->
+    <color name="test">#67a7f2</color>
+    <color name="loadmore_circle">#666666</color>
+    <color name="colff4444">#ff4444</color>
+    <color name="col3C3C3C">#3C3C3C</color>
+    <color name="col67a7f2">#67a7f2</color>
+    <color name="colf56969">#f56969</color>
+    <color name="colffd9d9">#ffd9d9</color>
+    <color name="colff2626">#ff2626</color>
+    <color name="col677ECF">#677ECF</color>
+    <color name="white">#ffffffff</color>
+    <color name="colF4F4F4">#F4F4F4</color>
+    <color name="light_white">#EEEEEE</color>
+    <color name="col101010">#101010</color>
+    <color name="colE5E5E5">#E5E5E5</color>
+    <color name="colFF9DB0">#FF9DB0</color>
+    <color name="colFAFAFA">#FAFAFA</color>
+    <color name="col666666">#666666</color>
+    <color name="colF0FOFO">#f0f0f0</color>
+    <color name="col333333">#333333</color>
+    <color name="col5376a0">#5376a0</color>
+    <color name="colB5B5B5">#B5B5B5</color>
+    <color name="col999999">#999999</color>
+    <color name="colff5d7c">#ff5d7c</color>
+    <color name="colEDECED">#edeced</color>
+    <color name="colEDEDED">#ededed</color>
+    <color name="colFDFDFD">#fdfdfd</color>
+    <color name="col484848">#484848</color>
+
+    <color name="white_transparent_40">#66FFFFFF</color>
+    <color name="timeline_bar_active_overlay">#66EF4B81</color>
+    <color name="timeline_bar_fix_overlay">#66EF4B81</color>
+
+    <color name="defalut_primary_color">#ff5454</color>
+    <color name="defalut_primary_color_alpha30">#4dff5454</color>
+
+    <color name="white_alpha_0">#ffffff</color>
+    <color name="white_alpha_10">#1affffff</color>
+    <color name="white_alpha_20">#33ffffff</color>
+    <color name="white_alpha_30">#4dffffff</color>
+    <color name="white_alpha_40">#66ffffff</color>
+    <color name="white_alpha_50">#7fffffff</color>
+    <color name="white_alpha_60">#99ffffff</color>
+    <color name="white_alpha_70">#b3ffffff</color>
+    <color name="white_alpha_80">#ccffffff</color>
+    <color name="white_alpha_85">#d9ffffff</color>
+
+    <array name="qupai_text_edit_colors">
+        <item>#E72E45</item>
+        <item>#0048D2</item>
+        <item>#000000</item>
+        <item>#53153E</item>
+        <item>#9A816B</item>
+        <item>#FFFF90</item>
+        <item>#E5CDFF</item>
+        <item>#FF6D00</item>
+        <item>#7A1FBA</item>
+        <item>#FA6593</item>
+        <item>#01ADD9</item>
+        <item>#ffffff</item>
+        <item>#C1FF44</item>
+        <item>#EF4B81</item>
+        <item>#019E25</item>
+        <item>#412D14</item>
+        <item>#FFEF02</item>
+        <item>#BC34BA</item>
+        <item>#F9C5C7</item>
+        <item>#38E5BF</item>
+        <item>#C5D2F9</item>
+    </array>
+
+    <array name="paint_colors">
+        <item>#FFFFFF</item>
+        <item>#000000</item>
+        <item>#01ADD9</item>
+        <item>#53DA3E</item>
+        <item>#FFEF02</item>
+        <item>#FF6D00</item>
+        <item>#E72E45</item>
+        <item>#BC34BA</item>
+    </array>
+    <color name="col5a000000">#5a000000</color>
+    <color name="colAFFF85">#AFFF85</color>
+    <color name="col5E7F4D">#5E7F4D</color>
+    <color name="col000000">#000000</color>
+    <color name="coleda210">#eda210</color>
+    <color name="col_black_alpha_50">#7f000000</color>
+    <color name="col_black_alpha_75">#bf000000</color>
+    <color name="col_black_alpha_90">#e6000000</color>
+    <color name="col_fafafa_alpha_95">#F2FAFAFA</color>
+    <color name="col_black_alpha_35">#59000000</color>
+    <color name="gold_egg_text_clolr">#736552</color>
+    <color name="gold_egg_button_clolr">#ffc312</color>
+    <color name="col2e93e8">#2e93e8</color>
 </resources>

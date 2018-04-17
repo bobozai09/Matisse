@@ -49,6 +49,9 @@ public final class SelectionSpec {
     public float thumbnailScale;
     public ImageEngine imageEngine;
     public OnSelectedListener onSelectedListener;
+    public boolean isPreview;
+    public boolean getPicCaptureOnly;
+
 
     private SelectionSpec() {
     }
@@ -80,6 +83,8 @@ public final class SelectionSpec {
         gridExpectedSize = 0;
         thumbnailScale = 0.5f;
         imageEngine = new GlideEngine();
+        isPreview=false;
+        getPicCaptureOnly=false;
     }
 
     public boolean singleSelectionModeEnabled() {

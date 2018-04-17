@@ -1,38 +1,24 @@
-/*
- * Copyright 2017 Zhihu Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.zhihu.matisse.internal.ui.widget;
 
-import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.RadialGradient;
-import android.graphics.Rect;
-import android.graphics.Shader;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.res.ResourcesCompat;
-import android.text.TextPaint;
-import android.util.AttributeSet;
-import android.view.View;
+        import android.content.Context;
+        import android.content.res.TypedArray;
+        import android.graphics.Canvas;
+        import android.graphics.Color;
+        import android.graphics.Paint;
+        import android.graphics.PorterDuff;
+        import android.graphics.PorterDuffXfermode;
+        import android.graphics.RadialGradient;
+        import android.graphics.Rect;
+        import android.graphics.Shader;
+        import android.graphics.Typeface;
+        import android.graphics.drawable.Drawable;
+        import android.support.v4.content.ContextCompat;
+        import android.support.v4.content.res.ResourcesCompat;
+        import android.text.TextPaint;
+        import android.util.AttributeSet;
+        import android.view.View;
 
-import com.zhihu.matisse.R;
+        import com.zhihu.matisse.R;
 
 public class CheckView extends View {
 
@@ -195,14 +181,16 @@ public class CheckView extends View {
             mBackgroundPaint = new Paint();
             mBackgroundPaint.setAntiAlias(true);
             mBackgroundPaint.setStyle(Paint.Style.FILL);
-            TypedArray ta = getContext().getTheme()
-                    .obtainStyledAttributes(new int[]{R.attr.item_checkCircle_backgroundColor});
-            int defaultColor = ResourcesCompat.getColor(
-                    getResources(), R.color.zhihu_item_checkCircle_backgroundColor,
-                    getContext().getTheme());
-            int color = ta.getColor(0, defaultColor);
-            ta.recycle();
+//            TypedArray ta = getContext().getTheme()
+//                    .obtainStyledAttributes(new int[]{R.attr.item_checkCircle_backgroundColor});
+//            int defaultColor = ResourcesCompat.getColor(
+//                    getResources(), R.color.zhihu_bottom_toolbar_apply_text_disable,
+//                    getContext().getTheme());
+//            int color = ta.getColor(0, defaultColor);
+//            ta.recycle();
+int color=getResources().getColor(R.color.text_clolr);
             mBackgroundPaint.setColor(color);
+
         }
     }
 

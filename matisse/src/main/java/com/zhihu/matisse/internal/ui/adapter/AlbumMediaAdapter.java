@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zhihu.matisse.R;
 import com.zhihu.matisse.internal.entity.Album;
@@ -36,6 +37,7 @@ import com.zhihu.matisse.internal.entity.IncapableCause;
 import com.zhihu.matisse.internal.model.SelectedItemCollection;
 import com.zhihu.matisse.internal.ui.widget.CheckView;
 import com.zhihu.matisse.internal.ui.widget.MediaGrid;
+import com.zhihu.matisse.internal.ui.widget.SquareFrameLayout;
 
 public class AlbumMediaAdapter extends
         RecyclerViewCursorAdapter<RecyclerView.ViewHolder> implements
@@ -65,7 +67,7 @@ public class AlbumMediaAdapter extends
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == VIEW_TYPE_CAPTURE) {
+        if (viewType == VIEW_TYPE_CAPTURE) { //打开摄像头
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.photo_capture_item, parent, false);
             CaptureViewHolder holder = new CaptureViewHolder(v);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -109,6 +111,7 @@ public class AlbumMediaAdapter extends
                 }
             }
             captureViewHolder.mHint.setCompoundDrawables(drawables[0], drawables[1], drawables[2], drawables[3]);
+         //   setCheckStatus(captureViewHolder);
         } else if (holder instanceof MediaViewHolder) {
             MediaViewHolder mediaViewHolder = (MediaViewHolder) holder;
 
@@ -125,6 +128,14 @@ public class AlbumMediaAdapter extends
         }
     }
 
+    private void setCheckStatus(CaptureViewHolder captureViewHolder) {
+        if (mSelectedCollection.maxSelectableReached()) {
+            captureViewHolder.squareFrameLayout.setEnabled(false);
+        } else {
+            captureViewHolder.squareFrameLayout.setEnabled(true);
+        }
+    }
+
     private void setCheckStatus(Item item, MediaGrid mediaGrid) {
         if (mSelectionSpec.countable) {
             int checkedNum = mSelectedCollection.checkedNumOf(item);
@@ -134,6 +145,7 @@ public class AlbumMediaAdapter extends
             } else {
                 if (mSelectedCollection.maxSelectableReached()) {
                     mediaGrid.setCheckEnabled(false);
+
                     mediaGrid.setCheckedNum(CheckView.UNCHECKED);
                 } else {
                     mediaGrid.setCheckEnabled(true);
@@ -280,11 +292,12 @@ public class AlbumMediaAdapter extends
     private static class CaptureViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mHint;
+        private SquareFrameLayout squareFrameLayout;
 
         CaptureViewHolder(View itemView) {
             super(itemView);
-
             mHint = (TextView) itemView.findViewById(R.id.hint);
+            squareFrameLayout = itemView.findViewById(R.id.square);
         }
     }
 

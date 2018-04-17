@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Copyright 2017 Zhihu Inc.
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,15 +14,15 @@
   limitations under the License.
   -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <com.zhihu.matisse.internal.ui.widget.PreviewViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/black"/>
+        android:background="@android:color/black" />
 
     <FrameLayout
         android:id="@+id/bottom_toolbar"
@@ -34,16 +33,6 @@
         android:elevation="4dp"
         tools:targetApi="lollipop">
 
-        <TextView
-            android:id="@+id/button_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:foreground="?selectableItemBackground"
-            android:padding="16dp"
-            android:layout_gravity="start"
-            android:text="@string/button_back"
-            android:textColor="?attr/preview.bottomToolbar.back.textColor"
-            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/size"
@@ -52,9 +41,38 @@
             android:layout_gravity="center"
             android:textColor="@color/preview_bottom_size"
             android:textSize="16sp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
+
+        <com.zhihu.matisse.internal.ui.widget.CheckView
+            android:id="@+id/check_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:padding="10dp" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_margin="8dp"
+        android:fitsSystemWindows="true">
 
         <TextView
+
+            android:id="@+id/button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:foreground="?selectableItemBackground"
+            android:padding="16dp"
+            android:drawableLeft="@drawable/close_white"
+            android:textColor="?attr/preview.bottomToolbar.back.textColor"
+            android:textSize="16sp" />
+
+        <TextView
+
             android:id="@+id/button_apply"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,22 +80,8 @@
             android:foreground="?selectableItemBackground"
             android:padding="16dp"
             android:textColor="?attr/preview.bottomToolbar.apply.textColor"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_margin="8dp"
-        android:fitsSystemWindows="true">
-
-        <com.zhihu.matisse.internal.ui.widget.CheckView
-            android:id="@+id/check_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"/>
     </FrameLayout>
 
 </RelativeLayout>

@@ -24,6 +24,7 @@ import com.zhihu.matisse.internal.entity.Item;
 import com.zhihu.matisse.internal.model.AlbumMediaCollection;
 import com.zhihu.matisse.internal.ui.adapter.PreviewPagerAdapter;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class AlbumPreviewActivity extends BasePreviewActivity implements
 
     public static final String EXTRA_ALBUM = "extra_album";
     public static final String EXTRA_ITEM = "extra_item";
+    public static final  String EXTRA_WHAT_CLASS_INTO="extra_into";
 
     private AlbumMediaCollection mCollection = new AlbumMediaCollection();
 
